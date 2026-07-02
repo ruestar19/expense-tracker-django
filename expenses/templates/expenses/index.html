@@ -1,0 +1,14 @@
+<h1>Expense Tracker</h1>
+
+<ul>
+{% for expense in expenses %}
+<li>
+{{ expense.title }}
+—
+₹{{ expense.amount }}
+—
+{{ expense.category }}
+</li>
+
+{% endfor %}
+</ul>
