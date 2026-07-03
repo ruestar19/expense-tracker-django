@@ -5,6 +5,7 @@ A web-based expense tracker built using Django.
 ## Current Features
 
 - View expenses
+- Add expenses
 - Django Admin Panel
 - PostgreSQL support (coming soon)
 
