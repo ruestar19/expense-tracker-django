@@ -1,14 +1,21 @@
 <h1>Expense Tracker</h1>
 
+<a href="{% url 'add_expense' %}">+Add Expense</a>
+
 <ul>
 {% for expense in expenses %}
 <li>
-{{ expense.title }}
-—
-₹{{ expense.amount }}
-—
-{{ expense.category }}
-</li>
+    {{ expense.title }}
+    —
+    ₹{{ expense.amount }}
+    —
+    {{ expense.category }}
 
+    <form action="{% url 'delete_expense' expense.id %}" method="POST" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+    </form>
+
+</li>
 {% endfor %}
 </ul>
