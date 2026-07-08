@@ -16,3 +16,5 @@ A web-based expense tracker built using Django.
 - Python
 - Django
 - HTML
+- CSS
+- Bootstrap
