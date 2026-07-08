@@ -10,6 +10,10 @@
     ₹{{ expense.amount }}
     —
     {{ expense.category }}
+    —
+    {{ expense.date }}
+
+    <a href="{% url 'edit_expense' expense.id %}">Edit</a>
 
     <form action="{% url 'delete_expense' expense.id %}" method="POST" style="display:inline;">
         {% csrf_token %}

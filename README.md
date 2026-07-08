@@ -7,6 +7,7 @@ A web-based expense tracker built using Django.
 - View expenses
 - Add expenses
 - Delete expenses
+- Update expenses
 - Django Admin Panel
 - PostgreSQL support (coming soon)
 
