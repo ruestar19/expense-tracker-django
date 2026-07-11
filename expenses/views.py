@@ -1,11 +1,26 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import Sum, Avg, Max, Count
 from .models import Expense
 from .forms import ExpenseForm
 
 def expense_list(request):
-    expenses= Expense.objects.all()
-
-    return render(request,'expenses/index.html',{'expenses': expenses})
+    selected_category = request.GET.get("category")
+    if selected_category:
+        expenses = Expense.objects.filter(category=selected_category)
+    else:
+        expenses = Expense.objects.all()
+    stats = Expense.objects.aggregate(
+    total=Sum("amount"),
+    count=Count("id"),
+    highest=Max("amount"),
+    average=Avg("amount"),
+)
+    return render(request,'expenses/index.html',{
+        'expenses': expenses,
+        'stats': stats,
+        'selected_category': selected_category,
+        'categories': Expense.CATEGORY_CHOICES,
+        })
 
 def add_expense(request):
     if request.method == "POST":
@@ -25,11 +40,6 @@ def delete_expense(request, expense_id):
         return redirect("expense_list")
 
     return redirect("expense_list")
-
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Expense
-from .forms import ExpenseForm
-
 
 def edit_expense(request, expense_id):
     expense = get_object_or_404(Expense, id=expense_id)
