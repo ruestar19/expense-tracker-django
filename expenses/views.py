@@ -4,11 +4,14 @@ from .models import Expense
 from .forms import ExpenseForm
 
 def expense_list(request):
+    search = request.GET.get("search")
     selected_category = request.GET.get("category")
     if selected_category:
         expenses = Expense.objects.filter(category=selected_category)
     else:
         expenses = Expense.objects.all()
+    if search:
+        expenses = expenses.filter(title__icontains=search)
     stats = Expense.objects.aggregate(
     total=Sum("amount"),
     count=Count("id"),

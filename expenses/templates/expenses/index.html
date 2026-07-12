@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="d-flex justify-content-between align-items-center mb-5">
     <h2>My Expenses</h2>
 
     <a href="{% url 'add_expense' %}" class="btn btn-primary">
@@ -10,7 +10,7 @@
     </a>
 </div>
 
-<div class="row mb-4">
+<div class="row mb-5">
 
     <div class="col-md-3">
         <div class="card text-center shadow-sm">
@@ -50,15 +50,29 @@
 
 </div>
 
-<form method="GET" class="mb-3">
 
-    <select name="category"
-            class="form-select w-25"
-            onchange="this.form.submit()">
+<form method="GET" class="row mb-4">
 
-        <option value="">All Categories</option>
+    <div class="col-md-4">
 
-        {% for value, label in categories %}
+        <input
+            type="text"
+            class="form-control"
+            placeholder="Search expenses..."
+            name="search"
+            value="{{ request.GET.search }}">
+
+    </div>
+
+    <div class="col-md-3">
+
+        <select
+            class="form-select"
+            name="category">
+
+            <option value="">All Categories</option>
+
+            {% for value,label in categories %}
 
             <option value="{{ value }}"
                 {% if selected_category == value %}
@@ -69,9 +83,21 @@
 
             </option>
 
-        {% endfor %}
+            {% endfor %}
 
-    </select>
+        </select>
+
+    </div>
+
+    <div class="col-md-2">
+
+        <button class="btn btn-primary w-100">
+
+            Filter
+
+        </button>
+
+    </div>
 
 </form>
 
@@ -116,8 +142,12 @@
 
                     {% csrf_token %}
 
-                    <button class="btn btn-danger btn-sm">
-                        Delete
+                    <button
+                    class="btn btn-danger btn-sm"
+                    onclick="return confirm('Delete this expense?')">
+
+                    Delete
+
                     </button>
 
                 </form>
@@ -133,3 +163,21 @@
 </table>
 
 {% endblock %}
+
+{% if expenses %}
+
+<table>
+
+...
+
+</table>
+
+{% else %}
+
+<div class="alert alert-info">
+
+No expenses found.
+
+</div>
+
+{% endif %}
